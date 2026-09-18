@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DispatchHalo — Every emergency call becomes a dispatch</title>
+    <meta name="description" content="Managed 24/7 emergency intake and dispatch for independent restoration companies. Answer, qualify, and route the calls your team cannot take." />
+    <meta property="og:title" content="DispatchHalo — Every emergency call becomes a dispatch" />
+    <meta property="og:description" content="Managed 24/7 emergency intake and dispatch for independent restoration companies." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://dispatchhalo.rmazin76.chatgpt.site" />
+    <meta property="og:image" content="https://dispatchhalo.rmazin76.chatgpt.site/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DispatchHalo — Every emergency call becomes a dispatch" />
+    <meta name="twitter:description" content="Managed 24/7 emergency intake and dispatch for independent restoration companies." />
+    <meta name="twitter:image" content="https://dispatchhalo.rmazin76.chatgpt.site/og.png" />
+    <meta name="theme-color" content="#10151b" />
+    <style>
+      :root {
+        --ink: #10151b;
+        --ink-2: #182029;
+        --cream: #f6f0e4;
+        --paper: #fffaf0;
+        --orange: #ff5b23;
+        --orange-2: #ff8155;
+        --mint: #b7f7df;
+        --line: rgba(16, 21, 27, 0.16);
+        --muted: #65717e;
+        --display: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+        --body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--cream);
+        font-family: var(--body);
+        line-height: 1.5;
+        text-rendering: optimizeLegibility;
+      }
+      button, input { font: inherit; }
+      a { color: inherit; }
+      .shell { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+      .eyebrow {
+        margin: 0 0 16px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+      }
+      .display {
+        margin: 0;
+        font-family: var(--display);
+        font-weight: 900;
+        letter-spacing: -.055em;
+        line-height: .92;
+        text-transform: uppercase;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid rgba(255,255,255,.12);
+        background: rgba(16, 21, 27, .92);
+        color: #fff;
+        backdrop-filter: blur(14px);
+      }
+      .nav { height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      .brand { display: flex; align-items: center; gap: 10px; font-weight: 850; letter-spacing: -.02em; text-decoration: none; }
+      .halo-mark { width: 25px; height: 25px; border: 3px solid var(--orange); border-radius: 50%; position: relative; }
+      .halo-mark::after { content: ""; position: absolute; width: 7px; height: 7px; right: -5px; bottom: -2px; background: var(--orange); border-radius: 50%; }
+      .nav-links { display: flex; align-items: center; gap: 26px; font-size: 14px; }
+      .nav-links a { text-decoration: none; color: #cdd4db; }
+      .nav-links a:hover, .nav-links a:focus-visible { color: #fff; }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 20px;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        background: var(--orange);
+        color: white;
+        font-weight: 800;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      }
+      .button:hover { transform: translateY(-2px); background: #ef4b14; }
+      .button:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
+      .button.small { min-height: 40px; padding: 0 16px; font-size: 14px; }
+      .button.ghost { background: transparent; border-color: rgba(255,255,255,.28); }
+      .button.ghost:hover { background: rgba(255,255,255,.08); }
+
+      .hero { overflow: hidden; background: var(--ink); color: #fff; }
+      .hero-inner { min-height: 690px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(330px, .8fr); align-items: center; gap: 64px; padding: 88px 0 76px; }
+      .hero .eyebrow { color: var(--orange-2); }
+      .hero h1 { max-width: 820px; font-size: clamp(62px, 8.3vw, 126px); }
+      .hero-copy { max-width: 650px; margin: 28px 0 32px; color: #cdd4db; font-size: clamp(18px, 2vw, 22px); }
+      .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+      .proofline { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 34px; color: #99a5af; font-size: 13px; }
+      .proofline strong { color: #fff; }
+      .dispatch-board {
+        position: relative;
+        border: 1px solid rgba(255,255,255,.14);
+        background: var(--ink-2);
+        box-shadow: 18px 18px 0 rgba(255,91,35,.96);
+      }
+      .board-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.12); font-size: 13px; }
+      .live { color: var(--mint); font-weight: 800; }
+      .live::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 6px rgba(183,247,223,.1); }
+      .call { padding: 24px 20px; border-bottom: 1px solid rgba(255,255,255,.1); }
+      .call:last-child { border-bottom: 0; }
+      .call-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .call strong { font-size: 15px; }
+      .call small { color: #96a2ad; }
+      .tag { padding: 5px 8px; border: 1px solid rgba(255,255,255,.18); border-radius: 99px; color: #d7dde2; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+      .tag.hot { border-color: var(--orange); color: var(--orange-2); }
+      .route { margin-top: 14px; padding-left: 14px; border-left: 2px solid var(--orange); color: #d9dfe5; font-size: 13px; }
+
+      .signal-strip { border-bottom: 1px solid var(--line); background: var(--paper); }
+      .signals { display: grid; grid-template-columns: repeat(3, 1fr); }
+      .signal { padding: 34px 30px; border-right: 1px solid var(--line); }
+      .signal:first-child { padding-left: 0; }
+      .signal:last-child { border-right: 0; }
+      .signal .number { display: block; margin-bottom: 5px; font-size: clamp(38px, 4vw, 58px); font-weight: 900; letter-spacing: -.06em; }
+      .signal p { margin: 0; color: var(--muted); font-size: 14px; }
+
+      .section { padding: 110px 0; }
+      .section-head { display: grid; grid-template-columns: .7fr 1.3fr; gap: 60px; margin-bottom: 64px; }
+      .section-head h2 { max-width: 820px; font-size: clamp(48px, 7vw, 90px); }
+      .section-head p { max-width: 620px; margin: 14px 0 0; color: var(--muted); font-size: 19px; }
+
+      .workflow { background: var(--paper); }
+      .steps { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+      .step { min-height: 280px; padding: 28px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .step-num { color: var(--orange); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 800; }
+      .step h3 { margin: 54px 0 12px; font-size: 24px; letter-spacing: -.035em; }
+      .step p { margin: 0; color: var(--muted); font-size: 15px; }
+
+      .calculator { background: var(--orange); color: var(--ink); }
+      .calc-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 70px; align-items: start; }
+      .calculator h2 { font-size: clamp(54px, 7vw, 94px); }
+      .calculator .intro { max-width: 500px; font-size: 18px; }
+      .calc-card { border: 2px solid var(--ink); background: var(--cream); box-shadow: 12px 12px 0 var(--ink); }
+      .fields { display: grid; grid-template-columns: 1fr 1fr; }
+      .field { padding: 22px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .field:nth-child(2n) { border-right: 0; }
+      .field label { display: block; margin-bottom: 8px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+      .field input { width: 100%; border: 0; border-bottom: 2px solid var(--ink); border-radius: 0; background: transparent; color: var(--ink); font-size: 28px; font-weight: 850; outline: 0; }
+      .field input:focus { border-color: var(--orange); }
+      .result { padding: 28px 24px 24px; }
+      .result-label { color: var(--muted); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+      .result-value { margin: 4px 0 2px; font-size: clamp(54px, 7vw, 86px); font-weight: 950; letter-spacing: -.07em; line-height: 1; }
+      .result-note { margin: 10px 0 18px; color: var(--muted); font-size: 13px; }
+      .result-detail { display: flex; justify-content: space-between; gap: 16px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; }
+
+      .offer { background: var(--ink); color: white; }
+      .offer .section-head p { color: #aeb8c1; }
+      .pricing { display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; }
+      .price-card { padding: 34px; border: 1px solid rgba(255,255,255,.16); background: #151c24; }
+      .price-card.featured { border: 2px solid var(--orange); }
+      .price-card h3 { margin: 0 0 8px; font-size: 28px; }
+      .price { margin: 30px 0 6px; font-size: 58px; font-weight: 950; letter-spacing: -.06em; }
+      .price span { font-size: 15px; font-weight: 600; letter-spacing: 0; color: #aeb8c1; }
+      .price-card ul { display: grid; gap: 12px; margin: 28px 0 32px; padding: 0; list-style: none; color: #d0d7dd; }
+      .price-card li::before { content: "✓"; margin-right: 10px; color: var(--mint); font-weight: 900; }
+      .fine { color: #8d99a4; font-size: 12px; }
+
+      .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+      .fit-card { padding: 34px; border: 1px solid var(--line); background: var(--paper); }
+      .fit-card h3 { margin: 0 0 20px; font-size: 28px; }
+      .fit-card ul { margin: 0; padding-left: 20px; color: var(--muted); }
+      .fit-card li + li { margin-top: 10px; }
+
+      .faq { background: var(--paper); }
+      .faq-list { border-top: 1px solid var(--line); }
+      details { border-bottom: 1px solid var(--line); }
+      summary { display: flex; justify-content: space-between; gap: 20px; padding: 24px 0; font-size: 19px; font-weight: 800; cursor: pointer; list-style: none; }
+      summary::-webkit-details-marker { display: none; }
+      summary::after { content: "+"; color: var(--orange); font-size: 26px; }
+      details[open] summary::after { content: "–"; }
+      details p { max-width: 820px; margin: 0 0 26px; color: var(--muted); }
+
+      .final-cta { background: var(--mint); }
+      .final-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 60px; align-items: end; }
+      .final-cta h2 { font-size: clamp(54px, 8vw, 108px); }
+      .audit-box { padding: 28px; border: 2px solid var(--ink); background: var(--paper); box-shadow: 10px 10px 0 var(--ink); }
+      .audit-box h3 { margin: 0 0 10px; font-size: 25px; }
+      .audit-box p { color: var(--muted); }
+      .audit-box .button { width: 100%; }
+      .copy-state { min-height: 20px; margin: 10px 0 0; color: #365b4d; font-size: 12px; font-weight: 700; text-align: center; }
+
+      footer { padding: 34px 0; background: var(--ink); color: #98a4ae; }
+      .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; font-size: 12px; }
+      .footer-row strong { color: white; }
+
+      @media (max-width: 900px) {
+        .nav-links a:not(.button) { display: none; }
+        .hero-inner, .calc-grid, .pricing, .final-grid { grid-template-columns: 1fr; }
+        .hero-inner { padding-top: 72px; }
+        .dispatch-board { max-width: 620px; margin: 0 18px 18px 0; }
+        .signals { grid-template-columns: 1fr; }
+        .signal { padding-left: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+        .signal:last-child { border-bottom: 0; }
+        .section-head { grid-template-columns: 1fr; gap: 12px; }
+        .steps { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 620px) {
+        .shell { width: min(100% - 28px, 1180px); }
+        .nav { height: 64px; }
+        .nav .button { display: none; }
+        .hero-inner { min-height: auto; padding: 62px 0 72px; gap: 48px; }
+        .hero h1 { font-size: clamp(54px, 18vw, 82px); }
+        .section { padding: 78px 0; }
+        .steps, .fields, .fit-grid { grid-template-columns: 1fr; }
+        .field { border-right: 0; }
+        .step { min-height: 240px; }
+        .result-detail, .footer-row { flex-direction: column; align-items: flex-start; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        .button { transition: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="shell nav" aria-label="Main navigation">
+        <a class="brand" href="#top" aria-label="DispatchHalo home"><span class="halo-mark" aria-hidden="true"></span>DispatchHalo</a>
+        <div class="nav-links">
+          <a href="#workflow">How it works</a>
+          <a href="#calculator">Call leak calculator</a>
+          <a href="#offer">Pilot</a>
+          <a class="button small" href="#audit">Map my call flow</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="shell hero-inner">
+          <div>
+            <p class="eyebrow">24/7 emergency intake for restoration contractors</p>
+            <h1 class="display">Every emergency call becomes a dispatch.</h1>
+            <p class="hero-copy">DispatchHalo answers the calls your team misses, qualifies the loss, and pages the right on-call technician—without adding a night shift.</p>
+            <div class="hero-actions">
+              <a class="button" href="#calculator">Calculate the call leak</a>
+              <a class="button ghost" href="#workflow">See the 7-minute handoff</a>
+            </div>
+            <div class="proofline" aria-label="Key service facts">
+              <span><strong>24/7</strong> overflow coverage</span>
+              <span><strong>&lt;10 sec</strong> target answer</span>
+              <span><strong>Human</strong> fallback</span>
+            </div>
+          </div>
+          <div class="dispatch-board" aria-label="Example dispatch activity">
+            <div class="board-head"><strong>Live dispatch board</strong><span class="live">Monitoring</span></div>
+            <div class="call">
+              <div class="call-row"><strong>Active water loss</strong><span class="tag hot">Priority</span></div>
+              <small>Single-family · 2 rooms · source stopped</small>
+              <div class="route">Primary technician acknowledged · 1m 42s</div>
+            </div>
+            <div class="call">
+              <div class="call-row"><strong>Sewage backup</strong><span class="tag">Qualified</span></div>
+              <small>Commercial · in service area · safe access</small>
+              <div class="route">Backup route triggered · awaiting acknowledgment</div>
+            </div>
+            <div class="call">
+              <div class="call-row"><strong>Non-emergency mold inquiry</strong><span class="tag">Queued</span></div>
+              <small>Inspection request · weekday follow-up</small>
+              <div class="route">Lead summary delivered to office</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="signal-strip" aria-label="Market evidence">
+        <div class="shell signals">
+          <div class="signal"><span class="number">14%</span><p>of home-service calls are missed, according to CallRail’s benchmark.</p></div>
+          <div class="signal"><span class="number">85%</span><p>of unanswered callers may never call the business back.</p></div>
+          <div class="signal"><span class="number">1 job</span><p>can be enough to make a monitored pilot economically sensible.</p></div>
+        </div>
+      </section>
+
+      <section class="section workflow" id="workflow">
+        <div class="shell">
+          <div class="section-head">
+            <p class="eyebrow">The 7-minute handoff</p>
+            <div><h2 class="display">From ringing phone to accountable owner.</h2><p>Not a generic answering bot. A restoration-specific chain with service-area checks, fixed safety rules, timed escalation, and a documented outcome.</p></div>
+          </div>
+          <div class="steps">
+            <article class="step"><span class="step-num">00:00</span><h3>Answer</h3><p>The assistant answers in your company name, clearly identifies itself, and confirms the caller is safe.</p></article>
+            <article class="step"><span class="step-num">01:30</span><h3>Qualify</h3><p>Loss type, timing, address, affected area, source status, insurance status, and callback details.</p></article>
+            <article class="step"><span class="step-num">03:00</span><h3>Dispatch</h3><p>A structured job reaches the primary on-call technician by SMS and voice, with a clear acknowledgment action.</p></article>
+            <article class="step"><span class="step-num">07:00</span><h3>Escalate</h3><p>No response triggers the backup route or a trained human—then the result lands in the weekly recovery report.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section calculator" id="calculator">
+        <div class="shell calc-grid">
+          <div><p class="eyebrow">Call leak calculator</p><h2 class="display">What could voicemail be costing?</h2><p class="intro">Use your own numbers. The estimate assumes 60% of missed calls are successfully qualified and routed. It is a planning estimate, never a revenue guarantee.</p></div>
+          <div class="calc-card">
+            <div class="fields">
+              <div class="field"><label for="calls">Inbound calls / month</label><input id="calls" type="number" min="0" value="120" inputmode="numeric" /></div>
+              <div class="field"><label for="missed">Missed call rate %</label><input id="missed" type="number" min="0" max="100" value="14" inputmode="decimal" /></div>
+              <div class="field"><label for="value">Average booked job $</label><input id="value" type="number" min="0" value="3500" inputmode="numeric" /></div>
+              <div class="field"><label for="close">Qualified-to-booked %</label><input id="close" type="number" min="0" max="100" value="25" inputmode="decimal" /></div>
+            </div>
+            <div class="result" aria-live="polite">
+              <div class="result-label">Estimated monthly revenue at risk</div>
+              <div class="result-value" id="resultValue">$8,820</div>
+              <p class="result-note">Directional estimate using the assumptions above; actual results vary.</p>
+              <div class="result-detail"><span><strong id="missedCount">17</strong> missed calls</span><span><strong id="jobCount">2.5</strong> potentially booked jobs</span><span><strong id="multiple">5.0×</strong> Dispatch plan price</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section offer" id="offer">
+        <div class="shell">
+          <div class="section-head">
+            <p class="eyebrow">Start with evidence</p>
+            <div><h2 class="display">A monitored pilot, not a leap of faith.</h2><p>We map the workflow, simulate the edge cases, monitor every call in week one, and report the outcomes that matter.</p></div>
+          </div>
+          <div class="pricing">
+            <article class="price-card featured">
+              <p class="eyebrow">Founding pilot · first 10 companies</p><h3>30-Day Monitored Pilot</h3>
+              <div class="price">$1,500 <span>one month</span></div>
+              <ul><li>Implementation included</li><li>Up to 300 answered calls</li><li>One dispatch workflow and on-call rotation</li><li>Daily QA during week one</li><li>Outcome report and month-end decision</li></ul>
+              <a class="button" href="#audit">Map your pilot</a>
+            </article>
+            <article class="price-card">
+              <p class="eyebrow">After proof</p><h3>Managed Dispatch</h3>
+              <div class="price">$1,750 <span>/ month + overage</span></div>
+              <ul><li>24/7 overflow and after-hours intake</li><li>Timed primary and backup escalation</li><li>CRM job creation or structured delivery</li><li>Low-confidence human fallback</li><li>Weekly recovery report and monthly tuning</li></ul>
+              <p class="fine">$2,500 implementation fee after the founding cohort. Multi-location pricing begins at $3,000/month.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="shell">
+          <div class="section-head"><p class="eyebrow">Fit check</p><div><h2 class="display">Built for urgent, high-value work.</h2><p>Focus keeps the workflows safer, the language sharper, and the economics honest.</p></div></div>
+          <div class="fit-grid">
+            <article class="fit-card"><h3>Strong fit</h3><ul><li>Independent water, fire, and mold restoration company</li><li>3–30 field employees</li><li>40+ inbound calls per month</li><li>Runs an on-call rotation</li><li>Wants overflow coverage, not staff replacement</li></ul></article>
+            <article class="fit-card"><h3>Not yet</h3><ul><li>Life-safety or medical dispatch</li><li>National call center replacement</li><li>Businesses without written service areas or escalation rules</li><li>Teams expecting guaranteed revenue</li><li>Outbound robocalling or purchased consumer lists</li></ul></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section faq" id="faq">
+        <div class="shell">
+          <div class="section-head"><p class="eyebrow">Questions owners ask</p><div><h2 class="display">Guardrails before growth.</h2></div></div>
+          <div class="faq-list">
+            <details><summary>Does this replace our receptionist?</summary><p>No. DispatchHalo is designed for missed, overflow, and after-hours calls. Your team keeps the daytime relationships; the service covers the gaps and documents the handoff.</p></details>
+            <details><summary>Will the assistant give remediation or insurance advice?</summary><p>No. It follows a written intake policy and fixed safety branches. It does not promise coverage, price, arrival time, claim outcome, or remediation instructions.</p></details>
+            <details><summary>What happens if a caller is distressed or the system is unsure?</summary><p>Low-confidence, negative-sentiment, and policy-trigger calls route to a trained human fallback or an approved client contact. A manual shutdown path is part of the implementation.</p></details>
+            <details><summary>Can we keep our current phone number?</summary><p>Usually, yes. The typical setup uses conditional call forwarding for busy, unanswered, or after-hours calls. The exact method depends on the current carrier.</p></details>
+            <details><summary>Is the estimate in the calculator guaranteed?</summary><p>No. It is a planning model based on the numbers entered and a stated 60% routing assumption. The pilot measures actual calls, qualifications, acknowledgments, bookings, and attributed revenue.</p></details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section final-cta" id="audit">
+        <div class="shell final-grid">
+          <div><p class="eyebrow">Free call-flow audit</p><h2 class="display">Find the gap before the next storm does.</h2></div>
+          <div class="audit-box"><h3>Map your after-hours workflow</h3><p>Copy a ready-to-send pilot brief with the exact information needed to scope your dispatch chain.</p><button class="button" id="copyBrief" type="button">Copy pilot brief</button><p class="copy-state" id="copyState"></p></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell footer-row"><span><strong>DispatchHalo</strong> · Working brand pending legal and domain clearance.</span><span>Automated assistant and recording disclosures required where applicable. No revenue guarantee.</span></div>
+    </footer>
+
+    <script>
+      const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+      const fields = ['calls', 'missed', 'value', 'close'].map((id) => document.getElementById(id));
+      function recalculate() {
+        const calls = Math.max(0, Number(fields[0].value) || 0);
+        const missedRate = Math.min(100, Math.max(0, Number(fields[1].value) || 0)) / 100;
+        const jobValue = Math.max(0, Number(fields[2].value) || 0);
+        const closeRate = Math.min(100, Math.max(0, Number(fields[3].value) || 0)) / 100;
+        const missedCalls = calls * missedRate;
+        const jobs = missedCalls * .6 * closeRate;
+        const atRisk = jobs * jobValue;
+        document.getElementById('resultValue').textContent = money.format(atRisk);
+        document.getElementById('missedCount').textContent = Math.round(missedCalls).toLocaleString();
+        document.getElementById('jobCount').textContent = jobs.toFixed(1);
+        document.getElementById('multiple').textContent = `${(atRisk / 1750).toFixed(1)}×`;
+      }
+      fields.forEach((field) => field.addEventListener('input', recalculate));
+      recalculate();
+
+      const brief = `DispatchHalo pilot brief\n\nCompany:\nPrimary service area:\nMonthly inbound calls:\nCurrent after-hours routing:\nAccepted loss types:\nExcluded loss types:\nPrimary on-call contact:\nBackup contact:\nAcknowledgment window:\nCurrent CRM / job system:\nRecording states:\nWhat the assistant must never say:\nSuccess metric for a 30-day pilot:\n`;
+      document.getElementById('copyBrief').addEventListener('click', async () => {
+        const state = document.getElementById('copyState');
+        try {
+          await navigator.clipboard.writeText(brief);
+          state.textContent = 'Pilot brief copied. Send it to your DispatchHalo contact.';
+        } catch (error) {
+          state.textContent = 'Copy was blocked. Select and copy the brief from the page source.';
+        }
+      });
+    </script>
+  </body>
+</html>
