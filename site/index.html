@@ -233,6 +233,70 @@
       .cookie-button:hover { background: rgba(255,255,255,.08); }
       .cookie-button:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
 
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+      .chat-launcher {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        z-index: 70;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 52px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--orange);
+        color: white;
+        box-shadow: 0 14px 40px rgba(16,21,27,.28);
+        font-weight: 850;
+        cursor: pointer;
+      }
+      .chat-launcher:hover { background: #ef4b14; transform: translateY(-2px); }
+      .chat-launcher:focus-visible, .chat-close:focus-visible, .chat-suggestion:focus-visible, .chat-send:focus-visible, .chat-input:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
+      .chat-launcher-mark { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); font-size: 15px; }
+      .chat-panel {
+        position: fixed;
+        right: 22px;
+        bottom: 88px;
+        z-index: 70;
+        display: flex;
+        flex-direction: column;
+        width: min(400px, calc(100vw - 32px));
+        height: min(620px, calc(100vh - 120px));
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.16);
+        border-radius: 12px;
+        background: var(--paper);
+        box-shadow: 0 24px 70px rgba(16,21,27,.35);
+      }
+      .chat-panel[hidden] { display: none; }
+      .chat-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 18px 16px; background: var(--ink); color: white; }
+      .chat-head-copy { display: flex; align-items: center; gap: 12px; }
+      .chat-avatar { display: grid; place-items: center; width: 38px; height: 38px; border: 2px solid var(--orange); border-radius: 50%; font-weight: 950; }
+      .chat-head strong { display: block; }
+      .chat-status { display: flex; align-items: center; gap: 6px; color: #aeb8c1; font-size: 11px; }
+      .chat-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--mint); }
+      .chat-close { width: 38px; height: 38px; border: 0; border-radius: 50%; background: rgba(255,255,255,.08); color: white; font-size: 23px; line-height: 1; cursor: pointer; }
+      .chat-messages { flex: 1; overflow-y: auto; padding: 18px; scroll-behavior: smooth; }
+      .chat-message { width: fit-content; max-width: 88%; margin: 0 0 12px; padding: 11px 13px; border-radius: 12px 12px 12px 3px; background: #e9e3d7; color: var(--ink); font-size: 14px; white-space: pre-line; }
+      .chat-message.user { margin-left: auto; border-radius: 12px 12px 3px 12px; background: var(--ink); color: white; }
+      .chat-message.typing { display: flex; gap: 4px; padding: 15px 16px; }
+      .chat-message.typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: chat-pulse 1s infinite ease-in-out; }
+      .chat-message.typing span:nth-child(2) { animation-delay: .14s; }
+      .chat-message.typing span:nth-child(3) { animation-delay: .28s; }
+      .chat-suggestions { display: flex; gap: 8px; overflow-x: auto; padding: 0 18px 12px; scrollbar-width: thin; }
+      .chat-suggestion { flex: 0 0 auto; padding: 8px 11px; border: 1px solid var(--line); border-radius: 999px; background: white; color: var(--ink); font-size: 12px; font-weight: 750; cursor: pointer; }
+      .chat-suggestion:hover { border-color: var(--orange); color: var(--orange); }
+      .chat-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 12px; border-top: 1px solid var(--line); background: white; }
+      .chat-input { min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 5px; background: var(--paper); color: var(--ink); }
+      .chat-send { min-width: 72px; border: 0; border-radius: 5px; background: var(--orange); color: white; font-weight: 850; cursor: pointer; }
+      .chat-send:hover { background: #ef4b14; }
+      .chat-send:disabled { opacity: .55; cursor: wait; }
+      .chat-footnote { margin: 0; padding: 0 14px 12px; background: white; color: var(--muted); font-size: 10px; text-align: center; }
+      .cookie-open .chat-launcher, .cookie-open .chat-panel { visibility: hidden; }
+      @keyframes chat-pulse { 0%, 80%, 100% { opacity: .32; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-2px); } }
+
       @media (max-width: 900px) {
         .nav-links a:not(.button) { display: none; }
         .hero-inner, .calc-grid, .pricing, .final-grid { grid-template-columns: 1fr; }
@@ -260,10 +324,13 @@
         .cookie-banner { right: 14px; bottom: 14px; left: 14px; grid-template-columns: 1fr; width: auto; padding: 20px; }
         .cookie-actions { justify-content: stretch; }
         .cookie-actions button { flex: 1 1 150px; }
+        .chat-launcher { right: 14px; bottom: 14px; }
+        .chat-panel { right: 14px; bottom: 78px; width: calc(100vw - 28px); height: min(660px, calc(100vh - 94px)); }
       }
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
         .button { transition: none; }
+        .chat-message.typing span { animation: none; }
       }
     </style>
   </head>
@@ -435,6 +502,34 @@
       </div>
     </footer>
 
+    <button class="chat-launcher" id="chatLauncher" type="button" aria-controls="chatPanel" aria-expanded="false">
+      <span class="chat-launcher-mark" aria-hidden="true">DH</span>
+      Ask DispatchHalo
+    </button>
+
+    <section class="chat-panel" id="chatPanel" role="dialog" aria-modal="false" aria-labelledby="chatTitle" hidden>
+      <div class="chat-head">
+        <div class="chat-head-copy">
+          <span class="chat-avatar" aria-hidden="true">DH</span>
+          <div><strong id="chatTitle">DispatchHalo Guide</strong><span class="chat-status">Ready to help</span></div>
+        </div>
+        <button class="chat-close" id="chatClose" type="button" aria-label="Close DispatchHalo chat">&times;</button>
+      </div>
+      <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions"></div>
+      <div class="chat-suggestions" aria-label="Suggested questions">
+        <button class="chat-suggestion" type="button" data-question="How does dispatch work?">How it works</button>
+        <button class="chat-suggestion" type="button" data-question="What does the pilot include?">Pilot details</button>
+        <button class="chat-suggestion" type="button" data-question="What does it cost?">Pricing</button>
+        <button class="chat-suggestion" type="button" data-question="Is there human backup?">Human backup</button>
+      </div>
+      <form class="chat-form" id="chatForm">
+        <label class="sr-only" for="chatInput">Ask a question about DispatchHalo</label>
+        <input class="chat-input" id="chatInput" type="text" maxlength="240" autocomplete="off" placeholder="Ask about pricing, setup, or dispatch…" />
+        <button class="chat-send" id="chatSend" type="submit">Send</button>
+      </form>
+      <p class="chat-footnote">Free browser-based guide · no chat data is sent or stored · not emergency support</p>
+    </section>
+
     <section class="cookie-banner" id="cookieBanner" role="dialog" aria-modal="false" aria-labelledby="cookieTitle" aria-describedby="cookieDescription" data-open="false">
       <div>
         <p class="eyebrow">Cookie choices</p>
@@ -481,6 +576,149 @@
       const cookieBanner = document.getElementById('cookieBanner');
       const essentialCookiesButton = document.getElementById('essentialCookies');
 
+      const chatLauncher = document.getElementById('chatLauncher');
+      const chatPanel = document.getElementById('chatPanel');
+      const chatClose = document.getElementById('chatClose');
+      const chatMessages = document.getElementById('chatMessages');
+      const chatForm = document.getElementById('chatForm');
+      const chatInput = document.getElementById('chatInput');
+      const chatSend = document.getElementById('chatSend');
+      let chatStarted = false;
+      let chatBusy = false;
+
+      const chatAnswers = [
+        {
+          test: /\b(911|life.?safety|medical|in danger|gas leak|fire now|active emergency)\b/i,
+          answer: 'DispatchHalo is not a 911 or life-safety service. If anyone may be in immediate danger, call 911 first. DispatchHalo handles restoration intake only after the caller is safe.'
+        },
+        {
+          test: /\b(managed|monthly|subscription|after proof)\b/i,
+          answer: 'Managed Dispatch is $1,750 per month plus usage overages. It includes 24/7 overflow and after-hours intake, timed escalation, structured job delivery, human fallback, weekly reporting, and monthly tuning. A $2,500 implementation fee applies after the founding cohort; multi-location plans begin at $3,000 per month.'
+        },
+        {
+          test: /\b(pilot|30.?day|founding|trial|1,?500)\b/i,
+          answer: 'The 30-Day Monitored Pilot is a one-time $1,500 engagement for the first 10 companies. It includes implementation, up to 300 answered calls, one dispatch workflow and on-call rotation, daily QA during week one, and a month-end outcome report.'
+        },
+        {
+          test: /\b(price|pricing|cost|charge|fee|pay|payment|checkout)\b/i,
+          answer: 'The founding 30-day pilot is $1,500 once. Managed Dispatch is $1,750 per month plus overage; implementation and multi-location pricing may apply. The plan cards above show the full inclusions.'
+        },
+        {
+          test: /\b(how|workflow|dispatch|route|process|acknowledge|7.?minute|escalat)\b/i,
+          answer: 'DispatchHalo answers in your company name, confirms the caller is safe, qualifies the loss, and sends a structured job to the primary on-call technician. If nobody acknowledges it within the agreed window, the backup route or trained human is triggered. The target workflow reaches that escalation point within seven minutes.'
+        },
+        {
+          test: /\b(what.*dispatchhalo|what.*do|service|answering bot|assistant)\b/i,
+          answer: 'DispatchHalo is managed 24/7 emergency intake and dispatch for restoration contractors. It covers missed, overflow, and after-hours calls, captures the loss details, routes the job to the right on-call person, and documents the outcome.'
+        },
+        {
+          test: /\b(human|backup|unsure|confidence|distress|fallback|sentiment)\b/i,
+          answer: 'Yes. Low-confidence, negative-sentiment, and policy-trigger calls can route to a trained human or an approved client contact. Every implementation also includes a manual shutdown path.'
+        },
+        {
+          test: /\b(phone|number|forward|carrier|line)\b/i,
+          answer: 'You can usually keep your current business number. Most teams use conditional call forwarding for busy, unanswered, or after-hours calls. The exact setup depends on your phone carrier.'
+        },
+        {
+          test: /\b(crm|job system|integration|software|deliver)\b/i,
+          answer: 'DispatchHalo can create a CRM job when an approved integration is available, or deliver a structured call summary by SMS, voice, email, or another agreed workflow. The pilot maps your current tools before launch.'
+        },
+        {
+          test: /\b(water|fire|mold|sewage|loss type|restoration|who.*for|fit)\b/i,
+          answer: 'The strongest fit is an independent water, fire, or mold restoration company with 3–30 field employees, at least 40 inbound calls per month, and an on-call rotation. DispatchHalo is not for medical or life-safety dispatch.'
+        },
+        {
+          test: /\b(advice|insurance|coverage|remediation|arrival|promise)\b/i,
+          answer: 'The assistant does not give remediation or insurance advice and never promises coverage, price, arrival time, or claim outcome. It follows your written intake policy and fixed safety rules.'
+        },
+        {
+          test: /\b(hour|24.?7|overnight|weekend|after.?hours|overflow)\b/i,
+          answer: 'Coverage is designed for missed, overflow, and after-hours calls, including nights and weekends. It complements your daytime staff instead of replacing them.'
+        },
+        {
+          test: /\b(setup|implement|start|onboard|launch|next step)\b/i,
+          answer: 'Start with a free call-flow audit. DispatchHalo maps service areas, accepted and excluded loss types, on-call contacts, escalation timing, required disclosures, and the phrases the assistant must never use before any live call is handled.'
+        },
+        {
+          test: /\b(contact|email|call you|text you|talk|reach)\b/i,
+          answer: 'Email dispatch.halo.now@gmail.com or call or text +1 (617) 383-1220. You can also use the “Copy pilot brief” button near the bottom of this page to prepare your workflow details.'
+        },
+        {
+          test: /\b(guarantee|revenue|results|calculator|roi|return)\b/i,
+          answer: 'DispatchHalo does not guarantee revenue. The calculator is a planning estimate using your inputs and a stated 60% qualification-and-routing assumption. The pilot measures actual calls, acknowledgments, bookings, and attributed outcomes.'
+        },
+        {
+          test: /\b(data|privacy|cookie|track|record|store|security)\b/i,
+          answer: 'This website guide runs entirely in your browser: it does not send or store your chat messages and uses no paid chatbot service. DispatchHalo call operations, disclosures, and retention rules are documented separately during implementation.'
+        }
+      ];
+
+      function getChatAnswer(question) {
+        const matched = chatAnswers.find((item) => item.test.test(question));
+        return matched ? matched.answer : 'I can explain how DispatchHalo works, service fit, safety guardrails, the monitored pilot, managed pricing, phone setup, human backup, and next steps. Try asking one of those—or email dispatch.halo.now@gmail.com for a company-specific answer.';
+      }
+
+      function addChatMessage(text, sender) {
+        const message = document.createElement('div');
+        message.className = `chat-message${sender === 'user' ? ' user' : ''}`;
+        message.textContent = text;
+        chatMessages.appendChild(message);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        return message;
+      }
+
+      function openChat() {
+        chatPanel.hidden = false;
+        chatLauncher.setAttribute('aria-expanded', 'true');
+        if (!chatStarted) {
+          addChatMessage('Hi — I’m the DispatchHalo Guide. Ask me how the service works, what the pilot includes, pricing, safety rules, or whether it fits your restoration company.', 'assistant');
+          chatStarted = true;
+        }
+        chatInput.focus();
+      }
+
+      function closeChat() {
+        chatPanel.hidden = true;
+        chatLauncher.setAttribute('aria-expanded', 'false');
+        chatLauncher.focus();
+      }
+
+      async function submitChatQuestion(question) {
+        const cleanQuestion = question.trim().slice(0, 240);
+        if (!cleanQuestion || chatBusy) return;
+        chatBusy = true;
+        chatSend.disabled = true;
+        addChatMessage(cleanQuestion, 'user');
+        chatInput.value = '';
+
+        const typing = document.createElement('div');
+        typing.className = 'chat-message typing';
+        typing.setAttribute('aria-label', 'DispatchHalo Guide is typing');
+        typing.innerHTML = '<span></span><span></span><span></span>';
+        chatMessages.appendChild(typing);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        await new Promise((resolve) => window.setTimeout(resolve, 380));
+        typing.remove();
+        addChatMessage(getChatAnswer(cleanQuestion), 'assistant');
+        chatBusy = false;
+        chatSend.disabled = false;
+        chatInput.focus();
+      }
+
+      chatLauncher.addEventListener('click', () => chatPanel.hidden ? openChat() : closeChat());
+      chatClose.addEventListener('click', closeChat);
+      chatForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submitChatQuestion(chatInput.value);
+      });
+      document.querySelectorAll('.chat-suggestion').forEach((button) => {
+        button.addEventListener('click', () => submitChatQuestion(button.dataset.question || ''));
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !chatPanel.hidden) closeChat();
+      });
+
       function getCookie(name) {
         const prefix = `${name}=`;
         const match = document.cookie.split('; ').find((item) => item.startsWith(prefix));
@@ -491,10 +729,12 @@
         const secure = window.location.protocol === 'https:' ? '; Secure' : '';
         document.cookie = `${consentCookieName}=${encodeURIComponent(value)}; Max-Age=15552000; Path=/; SameSite=Lax${secure}`;
         cookieBanner.dataset.open = 'false';
+        document.body.classList.remove('cookie-open');
       }
 
       function openCookieSettings() {
         cookieBanner.dataset.open = 'true';
+        document.body.classList.add('cookie-open');
         essentialCookiesButton.focus();
       }
 
