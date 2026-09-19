@@ -192,11 +192,46 @@
       .audit-box h3 { margin: 0 0 10px; font-size: 25px; }
       .audit-box p { color: var(--muted); }
       .audit-box .button { width: 100%; }
+      .contact-list { display: grid; gap: 10px; margin: 22px 0; padding: 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .contact-link { display: flex; align-items: center; justify-content: space-between; gap: 18px; color: var(--ink); font-weight: 800; text-decoration: none; }
+      .contact-link span { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+      .contact-link:hover, .contact-link:focus-visible { color: var(--orange); }
       .copy-state { min-height: 20px; margin: 10px 0 0; color: #365b4d; font-size: 12px; font-weight: 700; text-align: center; }
 
       footer { padding: 34px 0; background: var(--ink); color: #98a4ae; }
       .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; font-size: 12px; }
       .footer-row strong { color: white; }
+      .footer-meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px 18px; }
+      .footer-meta a, .cookie-settings { color: #dce2e7; text-decoration: underline; text-decoration-color: rgba(220,226,231,.35); text-underline-offset: 3px; }
+      .footer-meta a:hover, .footer-meta a:focus-visible, .cookie-settings:hover, .cookie-settings:focus-visible { color: white; text-decoration-color: var(--orange); }
+      .cookie-settings { padding: 0; border: 0; background: transparent; font: inherit; cursor: pointer; }
+
+      .cookie-banner {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        left: 20px;
+        z-index: 80;
+        display: none;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 28px;
+        width: min(920px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 24px;
+        border: 1px solid rgba(255,255,255,.2);
+        background: var(--ink);
+        color: white;
+        box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      }
+      .cookie-banner[data-open="true"] { display: grid; }
+      .cookie-banner .eyebrow { margin-bottom: 6px; color: var(--orange-2); }
+      .cookie-banner h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -.025em; }
+      .cookie-banner p:last-child { max-width: 650px; margin: 0; color: #bac3cb; font-size: 13px; }
+      .cookie-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+      .cookie-button { min-height: 44px; padding: 0 16px; border: 1px solid rgba(255,255,255,.3); border-radius: 3px; background: transparent; color: white; font-weight: 800; cursor: pointer; }
+      .cookie-button:hover { background: rgba(255,255,255,.08); }
+      .cookie-button:focus-visible { outline: 3px solid var(--mint); outline-offset: 3px; }
 
       @media (max-width: 900px) {
         .nav-links a:not(.button) { display: none; }
@@ -220,6 +255,11 @@
         .field { border-right: 0; }
         .step { min-height: 240px; }
         .result-detail, .footer-row { flex-direction: column; align-items: flex-start; }
+        .contact-link { align-items: flex-start; flex-direction: column; gap: 2px; }
+        .footer-meta { justify-content: flex-start; }
+        .cookie-banner { right: 14px; bottom: 14px; left: 14px; grid-template-columns: 1fr; width: auto; padding: 20px; }
+        .cookie-actions { justify-content: stretch; }
+        .cookie-actions button { flex: 1 1 150px; }
       }
       @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
@@ -370,14 +410,42 @@
       <section class="section final-cta" id="audit">
         <div class="shell final-grid">
           <div><p class="eyebrow">Free call-flow audit</p><h2 class="display">Find the gap before the next storm does.</h2></div>
-          <div class="audit-box"><h3>Map your after-hours workflow</h3><p>Copy a ready-to-send pilot brief with the exact information needed to scope your dispatch chain.</p><button class="button" id="copyBrief" type="button">Copy pilot brief</button><p class="copy-state" id="copyState"></p></div>
+          <div class="audit-box" id="contact">
+            <h3>Map your after-hours workflow</h3>
+            <p>Copy a ready-to-send pilot brief with the exact information needed to scope your dispatch chain, then send it to us.</p>
+            <div class="contact-list" aria-label="DispatchHalo contact information">
+              <a class="contact-link" href="mailto:dispatch.halo.now@gmail.com"><span>Email</span>dispatch.halo.now@gmail.com</a>
+              <a class="contact-link" href="tel:+16173831220"><span>Call or text</span>+1 (617) 383-1220</a>
+            </div>
+            <button class="button" id="copyBrief" type="button">Copy pilot brief</button>
+            <p class="copy-state" id="copyState" aria-live="polite"></p>
+          </div>
         </div>
       </section>
     </main>
 
     <footer>
-      <div class="shell footer-row"><span><strong>DispatchHalo</strong> · Working brand pending legal and domain clearance.</span><span>Automated assistant and recording disclosures required where applicable. No revenue guarantee.</span></div>
+      <div class="shell footer-row">
+        <span><strong>DispatchHalo</strong> · Automated assistant and recording disclosures required where applicable. No revenue guarantee.</span>
+        <div class="footer-meta">
+          <a href="mailto:dispatch.halo.now@gmail.com">dispatch.halo.now@gmail.com</a>
+          <a href="tel:+16173831220">+1 (617) 383-1220</a>
+          <button class="cookie-settings" id="cookieSettings" type="button">Cookie settings</button>
+        </div>
+      </div>
     </footer>
+
+    <section class="cookie-banner" id="cookieBanner" role="dialog" aria-modal="false" aria-labelledby="cookieTitle" aria-describedby="cookieDescription" data-open="false">
+      <div>
+        <p class="eyebrow">Cookie choices</p>
+        <h2 id="cookieTitle">Your privacy, your choice.</h2>
+        <p id="cookieDescription">We use one essential cookie to remember your choice. We do not currently use analytics or advertising trackers. Optional tools will stay off unless you choose “Accept all.”</p>
+      </div>
+      <div class="cookie-actions">
+        <button class="cookie-button" id="essentialCookies" type="button">Essential only</button>
+        <button class="button" id="acceptCookies" type="button">Accept all</button>
+      </div>
+    </section>
 
     <script>
       const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
@@ -408,6 +476,35 @@
           state.textContent = 'Copy was blocked. Select and copy the brief from the page source.';
         }
       });
+
+      const consentCookieName = 'dispatchhalo_cookie_consent';
+      const cookieBanner = document.getElementById('cookieBanner');
+      const essentialCookiesButton = document.getElementById('essentialCookies');
+
+      function getCookie(name) {
+        const prefix = `${name}=`;
+        const match = document.cookie.split('; ').find((item) => item.startsWith(prefix));
+        return match ? decodeURIComponent(match.slice(prefix.length)) : null;
+      }
+
+      function setCookieConsent(value) {
+        const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+        document.cookie = `${consentCookieName}=${encodeURIComponent(value)}; Max-Age=15552000; Path=/; SameSite=Lax${secure}`;
+        cookieBanner.dataset.open = 'false';
+      }
+
+      function openCookieSettings() {
+        cookieBanner.dataset.open = 'true';
+        essentialCookiesButton.focus();
+      }
+
+      essentialCookiesButton.addEventListener('click', () => setCookieConsent('essential'));
+      document.getElementById('acceptCookies').addEventListener('click', () => setCookieConsent('all'));
+      document.getElementById('cookieSettings').addEventListener('click', openCookieSettings);
+
+      if (!getCookie(consentCookieName)) {
+        openCookieSettings();
+      }
     </script>
   </body>
 </html>
