@@ -169,6 +169,7 @@
       .price-card ul { display: grid; gap: 12px; margin: 28px 0 32px; padding: 0; list-style: none; color: #d0d7dd; }
       .price-card li::before { content: "✓"; margin-right: 10px; color: var(--mint); font-weight: 900; }
       .fine { color: #8d99a4; font-size: 12px; }
+      .checkout-note { max-width: 860px; margin: 22px auto 0; color: #aeb8c1; font-size: 13px; text-align: center; }
 
       .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
       .fit-card { padding: 34px; border: 1px solid var(--line); background: var(--paper); }
@@ -439,15 +440,17 @@
               <p class="eyebrow">Founding pilot · first 10 companies</p><h3>30-Day Monitored Pilot</h3>
               <div class="price">$1,500 <span>one month</span></div>
               <ul><li>Implementation included</li><li>Up to 300 answered calls</li><li>One dispatch workflow and on-call rotation</li><li>Daily QA during week one</li><li>Outcome report and month-end decision</li></ul>
-              <a class="button" href="#audit">Map your pilot</a>
+              <a class="button" href="https://payments-na2.hubspot.com/payments/NjyVyHNTkY?referrer=PAYMENT_LINK" target="_blank" rel="noopener noreferrer" aria-label="Start the 30-Day Monitored Pilot for a one-time payment of $1,500">Start 30-day pilot — $1,500</a>
             </article>
             <article class="price-card">
               <p class="eyebrow">After proof</p><h3>Managed Dispatch</h3>
               <div class="price">$1,750 <span>/ month + overage</span></div>
               <ul><li>24/7 overflow and after-hours intake</li><li>Timed primary and backup escalation</li><li>CRM job creation or structured delivery</li><li>Low-confidence human fallback</li><li>Weekly recovery report and monthly tuning</li></ul>
               <p class="fine">$2,500 implementation fee after the founding cohort. Multi-location pricing begins at $3,000/month.</p>
+              <a class="button" href="https://payments-na2.hubspot.com/payments/WNxmspvw2ZJ?referrer=PAYMENT_LINK" target="_blank" rel="noopener noreferrer" aria-label="Start Managed Dispatch for $1,750 per month plus applicable overages">Start Managed Dispatch — $1,750/mo</a>
             </article>
           </div>
+          <p class="checkout-note">Secure checkout is powered by Stripe through HubSpot. The pilot is a one-time charge. Managed Dispatch renews monthly; implementation and usage overages are billed separately when applicable.</p>
         </div>
       </section>
 
@@ -534,7 +537,7 @@
       <div>
         <p class="eyebrow">Cookie choices</p>
         <h2 id="cookieTitle">Your privacy, your choice.</h2>
-        <p id="cookieDescription">We use one essential cookie to remember your choice. We do not currently use analytics or advertising trackers. Optional tools will stay off unless you choose “Accept all.”</p>
+        <p id="cookieDescription">We use one essential cookie to remember your choice. If you choose “Accept all,” HubSpot analytics loads to help us understand site visits and checkout interest. We do not use advertising trackers, and analytics stays off with “Essential only.”</p>
       </div>
       <div class="cookie-actions">
         <button class="cookie-button" id="essentialCookies" type="button">Essential only</button>
@@ -601,7 +604,7 @@
         },
         {
           test: /\b(price|pricing|cost|charge|fee|pay|payment|checkout)\b/i,
-          answer: 'The founding 30-day pilot is $1,500 once. Managed Dispatch is $1,750 per month plus overage; implementation and multi-location pricing may apply. The plan cards above show the full inclusions.'
+          answer: 'The founding 30-day pilot is $1,500 once. Managed Dispatch is $1,750 per month plus overage; implementation and multi-location pricing may apply. Use the secure checkout buttons in the plan cards above. Stripe processes payment through HubSpot, where the customer, payment, subscription, and associated deal are recorded.'
         },
         {
           test: /\b(how|workflow|dispatch|route|process|acknowledge|7.?minute|escalat)\b/i,
@@ -728,8 +731,33 @@
       function setCookieConsent(value) {
         const secure = window.location.protocol === 'https:' ? '; Secure' : '';
         document.cookie = `${consentCookieName}=${encodeURIComponent(value)}; Max-Age=15552000; Path=/; SameSite=Lax${secure}`;
+        if (value === 'all') {
+          loadHubSpotAnalytics();
+        } else {
+          disableHubSpotAnalytics();
+        }
         cookieBanner.dataset.open = 'false';
         document.body.classList.remove('cookie-open');
+      }
+
+      function loadHubSpotAnalytics() {
+        if (document.getElementById('hs-script-loader')) return;
+        window._hsq = window._hsq || [];
+        window._hsq.push(['doNotTrack', { track: true }]);
+        const script = document.createElement('script');
+        script.id = 'hs-script-loader';
+        script.async = true;
+        script.defer = true;
+        script.src = 'https://js.hs-scripts.com/247439510.js';
+        document.body.appendChild(script);
+      }
+
+      function disableHubSpotAnalytics() {
+        const script = document.getElementById('hs-script-loader');
+        if (!script) return;
+        window._hsq = window._hsq || [];
+        window._hsq.push(['doNotTrack']);
+        script.remove();
       }
 
       function openCookieSettings() {
@@ -742,7 +770,10 @@
       document.getElementById('acceptCookies').addEventListener('click', () => setCookieConsent('all'));
       document.getElementById('cookieSettings').addEventListener('click', openCookieSettings);
 
-      if (!getCookie(consentCookieName)) {
+      const storedConsent = getCookie(consentCookieName);
+      if (storedConsent === 'all') {
+        loadHubSpotAnalytics();
+      } else if (!storedConsent) {
         openCookieSettings();
       }
     </script>
